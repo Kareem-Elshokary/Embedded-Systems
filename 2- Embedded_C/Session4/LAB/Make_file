@@ -1,0 +1,38 @@
+# Mastring Embedded System Diploma 
+# Unit2 - Lesson4 - Lab1
+# Make file
+# Eng: Kareem Abdelkader
+
+CC = arm-none-eabi-
+CFLAGS = -mcpu=cortex-m4 -gdwarf-2 -g
+INCS = -I .
+LIBS = 
+SRC = $(wildcard *.c)
+OBJ = $(SRC: .c = .o)
+ASM = $(wildcard *.s)
+AOBJ = $(ASM: .s = .o)
+project_name = Toggle_Led_Cortex-m4
+
+all: $(project_name).bin
+	@echo "Build is done...."
+
+#fiels
+%.o: %.c
+	$(CC)gcc.exe -c $(CFLAGS) $(INCS) $@ -o $<
+
+#startup
+%.o: %.s
+	$(CC)as.exe $(CFLAGS) $< -o $@
+
+#linker
+$(project_name).elf: $(OBJ) $(ASM)
+	$(CC)ld.exe -T linker_script.ld $(OBJ) $(ASM) -o $@ -Map=map_file.Map
+
+#Binary
+$(project_name).bin: $(project_name).elf
+	$(CC)objcopy.exe -O binary $< $@
+
+clean:
+	rm *.o *.elf *.bin
+	@echo "Clean is done...."
+
