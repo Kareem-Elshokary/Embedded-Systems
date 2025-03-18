@@ -1,2 +1,2 @@
-# Embedded-Systems-Diploma
-Embedded SW Diploma 
+# Embedded-Systems
+Mastering Embedded Systems Online Diploma
